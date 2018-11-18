@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Малышев](https://up.htmlacademy.ru/javascript/16/user/855181).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рубец](https://htmlacademy.ru/profile/amator).
 
 ---
 

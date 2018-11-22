@@ -154,7 +154,7 @@ var getPins = function (pinsCount) {
     };
   }
   return arr;
-}
+};
 
 var pins = getPins(PINS_COUNT);
 

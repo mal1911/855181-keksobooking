@@ -18,14 +18,13 @@ var getRandomInt = function (min, max) {
 };
 
 var getMixArray = function (arr) {
-  return arr.sort(function () {
+  return arr.slice().sort(function () {
     return 0.5 - Math.random();
-  }).slice();
+  });
 };
 
 var getClipArray = function (arr, count) {
-  arr.length -= count;
-  return arr;
+  return arr.slice(0, count - 1);
 };
 
 var getAvatar = function (i) {
@@ -46,20 +45,18 @@ var getPinCoordinats = function (location) {
 };
 
 var removeChilds = function (node) {
-  while (node.firstChild) {
-    node.removeChild(node.firstChild);
-  }
+  node.innerHTML = '';
 };
 
-var addChildElements = function (arr, parentElement, template, renderElement) {
+var addChildElements = function (arr, parentElement, template, getElement) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
-    fragment.appendChild(renderElement(arr[i], template));
+    fragment.appendChild(getElement(arr[i], template));
   }
   parentElement.appendChild(fragment);
 };
 
-var renderPin = function (pin, template) {
+var getPinElement = function (pin, template) {
   var pinElement = template.cloneNode(true);
   var location = getPinCoordinats(pin.location);
   pinElement.style.left = location.x + 'px';
@@ -69,19 +66,19 @@ var renderPin = function (pin, template) {
   return pinElement;
 };
 
-var renderPhoto = function (photo, template) {
+var getPhotoElement = function (photo, template) {
   var photoElement = template.cloneNode(true);
   photoElement.src = photo;
   return photoElement;
 };
 
-var renderFeature = function (feature, template) {
+var getFeatureElement = function (feature, template) {
   var featureElement = template.cloneNode(true);
   featureElement.classList.add('popup__feature--' + feature);
   return featureElement;
 };
 
-var renderCard = function (pin, template) {
+var getCardElement = function (pin, template) {
   var cardElement = template.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = pin.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = pin.offer.address;
@@ -108,14 +105,14 @@ var renderCard = function (pin, template) {
   var featureTemplate = cardElement.querySelector('.popup__feature');
   featureTemplate.classList.remove('popup__feature--wifi');
   removeChilds(featureListElement);
-  addChildElements(pin.offer.features, featureListElement, featureTemplate, renderFeature);
+  addChildElements(pin.offer.features, featureListElement, featureTemplate, getFeatureElement);
 
   cardElement.querySelector('.popup__description').textContent = pin.offer.description;
 
   var photoListElement = cardElement.querySelector('.popup__photos');
   var photoTemplate = cardElement.querySelector('.popup__photo');
   removeChilds(photoListElement);
-  addChildElements(pin.offer.photos, photoListElement, photoTemplate, renderPhoto);
+  addChildElements(pin.offer.photos, photoListElement, photoTemplate, getPhotoElement);
 
   cardElement.querySelector('img').src = pin.author.avatar;
 
@@ -162,10 +159,10 @@ var mapBlock = document.querySelector('.map');
 
 var pinListElement = mapBlock.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-addChildElements(pins, pinListElement, pinTemplate, renderPin);
+addChildElements(pins, pinListElement, pinTemplate, getPinElement);
 
 var mapFiltersContainer = mapBlock.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-mapBlock.insertBefore(renderCard(pins[0], cardTemplate), mapFiltersContainer);
+mapBlock.insertBefore(getCardElement(pins[0], cardTemplate), mapFiltersContainer);
 
 mapBlock.classList.remove('map--faded');

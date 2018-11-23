@@ -3,6 +3,18 @@
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 75;
 var PINS_COUNT = 8;
+
+var MIN_Y = 130;
+var MAX_Y = 630;
+var MIN_X = 0;
+var MAX_X = 1200;
+var MIN_PRICE = 1000;
+var MAX_PRICE = 1000000;
+var MIN_GUESTS = 1;
+var MAX_GUESTS = 100;
+var MIN_ROOMS = 1;
+var MAX_ROOMS = 5;
+
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
   'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
   'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -41,7 +53,7 @@ var getFeatures = function () {
 
 // пересчитаем координаты
 var getPinCoordinats = function (location) {
-  return {x: location.x + PIN_WIDTH / 2, y: location.y + PIN_HEIGHT};
+  return {x: location.x + PIN_WIDTH / 2, y: location.y - PIN_HEIGHT};
 };
 
 var removeChilds = function (node) {
@@ -122,8 +134,8 @@ var getCardElement = function (pin, template) {
 var getPins = function (pinsCount) {
   var arr = [];
   for (var i = 0; i < pinsCount; i++) {
-    var x = getRandomInt(0, 900);
-    var y = getRandomInt(130, 630);
+    var x = getRandomInt(MIN_X, MAX_X - PIN_HEIGHT);
+    var y = getRandomInt(MIN_Y, MAX_Y);
 
     arr[i] = {
       author: {
@@ -133,10 +145,10 @@ var getPins = function (pinsCount) {
       offer: {
         title: getTitle(i),
         address: x + ',' + y,
-        price: getRandomInt(1000, 1000000),
+        price: getRandomInt(MIN_PRICE, MAX_PRICE),
         type: TYPES[getRandomInt(0, TYPES.length - 1)],
-        rooms: getRandomInt(1, 5),
-        guests: getRandomInt(1, 100),
+        rooms: getRandomInt(MIN_ROOMS, MAX_ROOMS),
+        guests: getRandomInt(MIN_GUESTS, MAX_GUESTS),
         checkin: CHECK[getRandomInt(0, CHECK.length - 1)],
         checkout: CHECK[getRandomInt(0, CHECK.length - 1)],
         features: getFeatures(),

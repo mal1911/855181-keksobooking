@@ -56,7 +56,7 @@ var getPinCoordinats = function (location) {
   return {x: location.x + PIN_WIDTH / 2, y: location.y - PIN_HEIGHT};
 };
 
-var removeChilds = function (node) {
+var removeChildElements = function (node) {
   node.innerHTML = '';
 };
 
@@ -116,14 +116,14 @@ var getCardElement = function (pin, template) {
   var featureListElement = cardElement.querySelector('.popup__features');
   var featureTemplate = cardElement.querySelector('.popup__feature');
   featureTemplate.classList.remove('popup__feature--wifi');
-  removeChilds(featureListElement);
+  removeChildElements(featureListElement);
   addChildElements(pin.offer.features, featureListElement, featureTemplate, getFeatureElement);
 
   cardElement.querySelector('.popup__description').textContent = pin.offer.description;
 
   var photoListElement = cardElement.querySelector('.popup__photos');
   var photoTemplate = cardElement.querySelector('.popup__photo');
-  removeChilds(photoListElement);
+  removeChildElements(photoListElement);
   addChildElements(pin.offer.photos, photoListElement, photoTemplate, getPhotoElement);
 
   cardElement.querySelector('img').src = pin.author.avatar;
@@ -166,15 +166,37 @@ var getPins = function (pinsCount) {
 };
 
 var pins = getPins(PINS_COUNT);
+var mapElement = document.querySelector('.map');
 
-var mapBlock = document.querySelector('.map');
+var showCard = function () {
+  var mapFiltersContainer = mapElement.querySelector('.map__filters-container');
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  mapElement.insertBefore(getCardElement(pins[0], cardTemplate), mapFiltersContainer);
+};
 
-var pinListElement = mapBlock.querySelector('.map__pins');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-addChildElements(pins, pinListElement, pinTemplate, getPinElement);
+var pageActivate = function () {
+  var pinListElement = mapElement.querySelector('.map__pins');
+  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  addChildElements(pins, pinListElement, pinTemplate, getPinElement);
 
-var mapFiltersContainer = mapBlock.querySelector('.map__filters-container');
-var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-mapBlock.insertBefore(getCardElement(pins[0], cardTemplate), mapFiltersContainer);
+  mapElement.classList.remove('map--faded');
+};
 
-mapBlock.classList.remove('map--faded');
+var form = document.querySelector('.ad-form');
+
+var formElementsDisable = function () {
+  var fieldsets = form.querySelectorAll('fieldset');
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+var formElementsEnable = function () {
+  var fieldsets = form.querySelectorAll('fieldset');
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].removeAttribute('disabled');
+  }
+};
+
+formElementsDisable();
+//formElementsEnable();

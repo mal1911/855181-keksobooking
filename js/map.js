@@ -286,14 +286,6 @@ pinMainElement.addEventListener('click', function () {
   activatePage();
 });
 
-var isPinNotMain = function (element) {
-  var flag;
-  if (element) {
-    flag = element.classList.contains('map__pin') && !element.classList.contains('map__pin--main');
-  }
-  return flag;
-};
-
 var getIndexElement = function (element) {
   var indexElement;
   var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -315,12 +307,10 @@ var setActivePin = function (element) {
 };
 
 var activatePin = function (element) {
-  if (isPinNotMain(element)) {
+  element = element.closest('.map__pin:not(.map__pin--main)');
+  if (element) {
     setActivePin(element);
     openCard(getIndexElement(element));
-  } else if (isPinNotMain(element.parentNode)) {
-    setActivePin(element.parentNode);
-    openCard(getIndexElement(element.parentNode));
   }
 };
 

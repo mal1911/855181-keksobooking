@@ -18,7 +18,7 @@ var MAX_GUESTS = 100;
 var MIN_ROOMS = 1;
 var MAX_ROOMS = 5;
 var ESC_KEYCODE = 27;
-
+var ENTER_KEYCODE = 13;
 
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
   'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
@@ -66,8 +66,10 @@ var getMainPinCoordinatsFromPosition = function (element) {
   return {x: Math.floor(parseInt(element.style.left, 10) + MAIN_PIN_WIDTH / 2), y: Math.floor(parseInt(element.style.top, 10) + MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)};
 };
 
-var removeChildElements = function (node) {
-  node.innerHTML = '';
+var removeChildElements = function (element) {
+  if (element) {
+    element.innerHTML = '';
+  }
 };
 
 var addChildElements = function (arr, parentElement, template, getElement) {
@@ -85,6 +87,7 @@ var getPinElement = function (pin, template) {
   pinElement.style.top = location.y + 'px';
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.title;
+  pinElement.tabIndex = '0';
   return pinElement;
 };
 
@@ -290,11 +293,11 @@ var getIndexFormElement = function (element) {
 };
 
 var setActivePin = function (element) {
-  var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-  for (var i = 0; i < pinElements.length; i++) {
-    pinElements[i].classList.remove('.map__pin--active');
+  var oldActiveElememt = mapElement.querySelector('.map__pin--active');
+  if (oldActiveElememt) {
+    oldActiveElememt.classList.remove('map__pin--active');
   }
-  element.classList.add('.map__pin--active');
+  element.classList.add('map__pin--active');
 };
 
 var activatePin = function (element) {
@@ -306,6 +309,12 @@ var activatePin = function (element) {
 
 mapElement.addEventListener('click', function (evt) {
   activatePin(evt.target);
+});
+
+mapElement.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activatePin(evt.target);
+  }
 });
 
 mapDisable();

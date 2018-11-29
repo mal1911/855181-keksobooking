@@ -205,17 +205,14 @@ var openCard = function (indexElement) {
   cardElement.querySelector('.popup__close').addEventListener('click', closeCard);
 };
 
-var flagShowPins = false;
-
 var isShowPins = function () {
-  return flagShowPins;
+  return mapElement.querySelectorAll('.map__pin:not(.map__pin--main)').length;
 };
 
 var showPins = function () {
   var pinListElement = mapElement.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   addChildElements(pins, pinListElement, pinTemplate, getPinElement);
-  flagShowPins = true;
 };
 
 var mapEnable = function () {
@@ -280,7 +277,7 @@ var isPinNotMain = function (element) {
   return element.classList.contains('map__pin') && !element.classList.contains('map__pin--main');
 };
 
-var getIndexFormElement = function (element) {
+var getIndexElement = function (element) {
   var indexElement;
   var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pinElements.length; i++) {
@@ -303,7 +300,7 @@ var setActivePin = function (element) {
 var activatePin = function (element) {
   if (isPinNotMain(element)) {
     setActivePin(element);
-    openCard(getIndexFormElement(element));
+    openCard(getIndexElement(element));
   }
 };
 

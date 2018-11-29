@@ -63,7 +63,10 @@ var getPositionFromPinCoordinats = function (location) {
 
 // из left top
 var getMainPinCoordinatsFromPosition = function (element) {
-  return {x: Math.floor(parseInt(element.style.left, 10) + MAIN_PIN_WIDTH / 2), y: Math.floor(parseInt(element.style.top, 10) + MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)};
+  return {
+    x: Math.floor(parseInt(element.style.left, 10) + MAIN_PIN_WIDTH / 2),
+    y: Math.floor(parseInt(element.style.top, 10) + MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)
+  };
 };
 
 var removeChildElements = function (element) {
@@ -88,6 +91,16 @@ var getPinElement = function (pin, template) {
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.title;
   pinElement.tabIndex = '0';
+  /*
+    pinElement.addEventListener('click', function () {
+      activatePin(pinElement);
+    });
+
+    pinElement.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        activatePin(pinElement);
+      }
+    });*/
   return pinElement;
 };
 
@@ -274,7 +287,11 @@ pinMainElement.addEventListener('click', function () {
 });
 
 var isPinNotMain = function (element) {
-  return element.classList.contains('map__pin') && !element.classList.contains('map__pin--main');
+  var flag;
+  if (element) {
+    flag = element.classList.contains('map__pin') && !element.classList.contains('map__pin--main');
+  }
+  return flag;
 };
 
 var getIndexElement = function (element) {
@@ -301,6 +318,9 @@ var activatePin = function (element) {
   if (isPinNotMain(element)) {
     setActivePin(element);
     openCard(getIndexElement(element));
+  } else if (isPinNotMain(element.parentNode)) {
+    setActivePin(element.parentNode);
+    openCard(getIndexElement(element.parentNode));
   }
 };
 

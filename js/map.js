@@ -91,16 +91,6 @@ var getPinElement = function (pin, template) {
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.title;
   pinElement.tabIndex = '0';
-  /*
-    pinElement.addEventListener('click', function () {
-      activatePin(pinElement);
-    });
-
-    pinElement.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
-        activatePin(pinElement);
-      }
-    });*/
   return pinElement;
 };
 

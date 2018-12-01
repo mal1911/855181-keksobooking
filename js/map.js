@@ -457,41 +457,6 @@ for (var i = 0; i < inputElements.length; i++) {
   });
 }
 
-/*
-
-inputTitle.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    evt.stopPropagation();
-  }
-});
-
-var setCustomValidityUserName = function () {
-  if (inputUserName.validity.tooShort) {
-    inputUserName.setCustomValidity('Мало символов.');
-  } else if (inputUserName.validity.tooLong) {
-    inputUserName.setCustomValidity('Много символов.');
-  } else if (inputUserName.validity.valueMissing) {
-    inputUserName.setCustomValidity('Вообще не ввели.');
-  } else {
-    inputUserName.setCustomValidity('');
-  }
-};
-
-var checkValidityUserName = function () {
-  inputUserName.checkValidity();
-};
-
-inputUserName.addEventListener('invalid', function () {
-  setCustomValidityUserName();
-});
-
-inputUserName.addEventListener('input', function () {
-  checkValidityUserName();
-});*/
-
-//
-
-
 mapDisable();
 formDisable();
 setAddress(pinMainElement);

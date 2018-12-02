@@ -7,6 +7,11 @@ var MAIN_PIN_HEIGHT = 65;
 var MAIN_PIN_POINTER_HEIGHT = 22;
 var PINS_COUNT = 8;
 
+var PRICE_BUNGALO = 0;
+var PRICE_FLAT = 1000;
+var PRICE_HOUSE = 5000;
+var PRICE_PALACE = 10000;
+
 var MIN_Y = 130;
 var MAX_Y = 630;
 var MIN_X = 0;
@@ -209,7 +214,7 @@ var openCard = function (indexElement) {
 };
 
 var isShowPins = function () {
-  return mapElement.querySelectorAll('.map__pin:not(.map__pin--main)').length;
+  return mapElement.querySelector('.map__pin:not(.map__pin--main)');
 };
 
 var showPins = function () {
@@ -342,18 +347,18 @@ var setCustomValidity = function (evt) {
 };
 
 var setPriceElementMinValue = function (value) {
-  var price = 0;
+  var price = PRICE_BUNGALO;
   switch (value) {
     case 'bungalo':
       break;
     case 'flat':
-      price = 1000;
+      price = PRICE_FLAT;
       break;
     case 'house':
-      price = 5000;
+      price = PRICE_HOUSE;
       break;
     case 'palace':
-      price = 10000;
+      price = PRICE_PALACE;
       break;
   }
   priceElement.setAttribute('min', price);

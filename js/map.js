@@ -16,6 +16,7 @@ var MIN_Y = 130;
 var MAX_Y = 630;
 var MIN_X = 0;
 var MAX_X = 1200;
+
 var MIN_PRICE = 1000;
 var MAX_PRICE = 1000000;
 var MIN_GUESTS = 1;
@@ -467,3 +468,5 @@ formDisable();
 setAddress(pinMainElement);
 setPriceElementMinValue(typeElement.value);
 setCapacityValues(roomNumberElement);
+var mainPinElement = mapElement.querySelector('.map__pin--main');
+window.dragEndDrop.setDraggin(mainPinElement);

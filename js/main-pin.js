@@ -22,7 +22,7 @@
     minX: window.pinsArea.minX,
     maxX: window.pinsArea.maxX - MAIN_PIN_WIDTH,
     minY: window.pinsArea.minY,
-    maxY: window.pinsArea.maxY - MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT
+    maxY: window.pinsArea.maxY - (MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)
   };
 
   var mainPinInit = function (onMainPinActive) {

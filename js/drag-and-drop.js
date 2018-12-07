@@ -1,8 +1,9 @@
 'use strict';
 (function () {
   var draggingElement;
-  var elementActived;
+  var activateElement;
   var currentPosition;
+  var defaultPosition;
   var validArea;
 
   var isValidPisition = function (position) {
@@ -51,23 +52,33 @@
     var onMouseUp = function () {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      elementActived(currentPosition);
+      activateElement(currentPosition);
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  var setDraggin = function (element, area, onElementActive) {
+  var initialize = function (element, area, onActivateElement) {
     draggingElement = element;
-    currentPosition = getElementPosition;
-    elementActived = onElementActive;
+    currentPosition = getElementPosition();
+    defaultPosition = currentPosition;
+    activateElement = onActivateElement;
     validArea = area;
     draggingElement.addEventListener('mousedown', onDraggingElement);
   };
 
+  var getCurrentPositon = function () {
+    return currentPosition;
+  };
+
+  var getDefaultPositon = function () {
+    return defaultPosition;
+  };
+
   window.dragEndDrop = {
-    setDraggin: setDraggin,
-    getElementPosition: getElementPosition
+    initialize: initialize,
+    getElementPosition: getCurrentPositon,
+    getDefaultPositon: getDefaultPositon
   };
 })();

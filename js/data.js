@@ -20,37 +20,24 @@
   var CHECK = ['12:00', '13:00', '14:00'];
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
-  var getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
-
-  var getMixArray = function (arr) {
-    return arr.slice().sort(function () {
-      return 0.5 - Math.random();
-    });
-  };
-
-  var getClipArray = function (arr, count) {
-    return arr.slice(0, count - 1);
-  };
 
   var getAvatar = function (i) {
     return 'img/avatars/user0' + ++i + '.png';
   };
 
   var getTitle = function (i) {
-    return getMixArray(TITLES)[i];
+    return window.util.getMixArray(TITLES)[i];
   };
 
   var getFeatures = function () {
-    return getClipArray(getMixArray(FEATURES), getRandomInt(0, FEATURES.length));
+    return window.util.getClipArray(window.util.getMixArray(FEATURES), window.util.getRandomInt(0, FEATURES.length));
   };
 
   var getPins = function () {
     var arr = [];
     for (var i = 0; i < PINS_COUNT; i++) {
-      var x = getRandomInt(window.pinsArea.minX + PIN_WIDTH / 2, window.pinsArea.maxX - PIN_WIDTH / 2);
-      var y = getRandomInt(window.pinsArea.minY, window.pinsArea.maxY - PIN_HEIGHT);
+      var x = window.util.getRandomInt(window.pinsArea.minX + PIN_WIDTH / 2, window.pinsArea.maxX - PIN_WIDTH / 2);
+      var y = window.util.getRandomInt(window.pinsArea.minY, window.pinsArea.maxY - PIN_HEIGHT);
 
       arr[i] = {
         author: {
@@ -60,15 +47,15 @@
         offer: {
           title: getTitle(i),
           address: x + ',' + y,
-          price: getRandomInt(MIN_PRICE, MAX_PRICE),
-          type: TYPES[getRandomInt(0, TYPES.length - 1)],
-          rooms: getRandomInt(MIN_ROOMS, MAX_ROOMS),
-          guests: getRandomInt(MIN_GUESTS, MAX_GUESTS),
-          checkin: CHECK[getRandomInt(0, CHECK.length - 1)],
-          checkout: CHECK[getRandomInt(0, CHECK.length - 1)],
+          price: window.util.getRandomInt(MIN_PRICE, MAX_PRICE),
+          type: TYPES[window.util.getRandomInt(0, TYPES.length - 1)],
+          rooms: window.util.getRandomInt(MIN_ROOMS, MAX_ROOMS),
+          guests: window.util.getRandomInt(MIN_GUESTS, MAX_GUESTS),
+          checkin: CHECK[window.util.getRandomInt(0, CHECK.length - 1)],
+          checkout: CHECK[window.util.getRandomInt(0, CHECK.length - 1)],
           features: getFeatures(),
           description: '',
-          photos: getMixArray(PHOTOS),
+          photos: window.util.getMixArray(PHOTOS),
         },
 
         location: {

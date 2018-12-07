@@ -2,6 +2,7 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 75;
+  var pins;
   var mapElement = document.querySelector('.map');
 
   var getPositionFromPinCoordinats = function (coordinats) {
@@ -24,10 +25,19 @@
   };
 
   var show = function () {
-    if (!isShow()) {
+    var successHandler = function (arr) {
+      pins = arr;
       var pinListElement = mapElement.querySelector('.map__pins');
       var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
       window.domUtil.addChildElements(pins, pinListElement, pinTemplate, getPinElement);
+    };
+
+    var errorHandler = function (errorMessage) {
+      window.errorMessage.show(errorMessage);
+    };
+
+    if (!isShow()) {
+      window.backend.load(window.url.LOAD, successHandler, errorHandler);
     }
   };
 
@@ -48,7 +58,8 @@
     }
   };
 
-  var pins = window.data.getPins();
+
+//  var pins = window.data.getPins();
 
   window.pins = {
     show: show,

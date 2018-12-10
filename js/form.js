@@ -5,6 +5,7 @@
   var PRICE_HOUSE = 5000;
   var PRICE_PALACE = 10000;
 
+  var onResetForm;
   var formElement = document.querySelector('.ad-form');
   var inputElements = formElement.querySelectorAll('input');
   var typeElement = formElement.querySelector('#type');
@@ -13,6 +14,7 @@
   var timeoutElement = formElement.querySelector('#timeout');
   var roomNumberElement = formElement.querySelector('#room_number');
   var capacityElement = formElement.querySelector('#capacity');
+  var featureElements = formElement.querySelectorAll('.feature__checkbox');
 
   var isEnabled = function () {
     return !formElement.classList.contains('ad-form--disabled');
@@ -175,10 +177,56 @@
     formElement.querySelector('#address').value = coordinats.x + ',' + coordinats.y;
   };
 
+  var save = function () {
+    var successHandler = function () {
+      reset();
+      window.msg.showSuccess('Операция успешно выполнена', false);
+    };
+
+    var errorHandler = function (errorMessage) {
+      var repeatHandler = function () {
+        save();
+      };
+      window.msg.showError(errorMessage, repeatHandler);
+    };
+    window.backend.save(new FormData(formElement), window.url.SAVE, successHandler, errorHandler);
+  };
+
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    save();
+  });
+
+  var reset = function () {
+    for (i = 0; i < inputElements.length; i++) {
+      inputElements[i].value = '';
+    }
+    typeElement.value = 'flat';
+    roomNumberElement.value = '1';
+    capacityElement.value = '3';
+    timeinElement.value = '12:00';
+    timeoutElement.value = '12:00';
+
+    for (i = 0; i < featureElements.length; i++) {
+      featureElements[i].checked = false;
+    }
+    onResetForm();
+  };
+
+  formElement.addEventListener('reset', function (evt) {
+    evt.preventDefault();
+    reset();
+  });
+
+  var initialize = function (resetFormHandler) {
+    onResetForm = resetFormHandler;
+  };
+
   setPriceElementMinValue(typeElement.value);
   setCapacityValues(roomNumberElement);
 
   window.form = {
+    initialize: initialize,
     enable: enable,
     disable: disable,
     setAddress: setAddress

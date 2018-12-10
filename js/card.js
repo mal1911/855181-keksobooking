@@ -22,7 +22,12 @@
 
   var getCardElement = function (pin, template) {
     var cardElement = template.cloneNode(true);
-    cardElement.querySelector('.popup__title').textContent = pin.offer.title;
+    if (pin.offer.title) {
+      cardElement.querySelector('.popup__title').textContent = pin.offer.title;
+    } else {
+      cardElement.querySelector('.popup__title').style.display = 'none';
+    }
+
     cardElement.querySelector('.popup__text--address').textContent = pin.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = pin.offer.price + '₽/ночь';
     var carType = cardElement.querySelector('.popup__type');
@@ -47,14 +52,28 @@
     var featureTemplate = cardElement.querySelector('.popup__feature');
     featureTemplate.classList.remove('popup__feature--wifi');
     window.domUtil.removeChildElements(featureListElement);
-    window.domUtil.addChildElements(pin.offer.features, featureListElement, featureTemplate, getFeatureElement);
 
-    cardElement.querySelector('.popup__description').textContent = pin.offer.description;
+    if (pin.offer.features.length === 0) {
+      featureListElement.style.display = 'none';
+    } else {
+      window.domUtil.addChildElements(pin.offer.features, featureListElement, featureTemplate, getFeatureElement);
+    }
+
+    if (pin.offer.description) {
+      cardElement.querySelector('.popup__description').textContent = pin.offer.description;
+    } else {
+      cardElement.querySelector('.popup__description').style.display = 'none';
+    }
 
     var photoListElement = cardElement.querySelector('.popup__photos');
     var photoTemplate = cardElement.querySelector('.popup__photo');
     window.domUtil.removeChildElements(photoListElement);
-    window.domUtil.addChildElements(pin.offer.photos, photoListElement, photoTemplate, getPhotoElement);
+
+    if (pin.offer.photos.length === 0) {
+      photoListElement.style.display = 'none';
+    } else {
+      window.domUtil.addChildElements(pin.offer.photos, photoListElement, photoTemplate, getPhotoElement);
+    }
 
     cardElement.querySelector('img').src = pin.author.avatar;
 

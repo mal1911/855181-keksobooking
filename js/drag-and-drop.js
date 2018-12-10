@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   var draggingElement;
-  var activateElement;
+  var onNewActivateElement;
   var currentPosition;
   var defaultPosition;
   var validArea;
@@ -52,7 +52,7 @@
     var onMouseUp = function () {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      activateElement(currentPosition);
+      onNewActivateElement(currentPosition);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -63,7 +63,7 @@
     draggingElement = element;
     currentPosition = getElementPosition();
     defaultPosition = currentPosition;
-    activateElement = onActivateElement;
+    onNewActivateElement = onActivateElement;
     validArea = area;
     draggingElement.addEventListener('mousedown', onDraggingElement);
   };
@@ -76,8 +76,15 @@
     return defaultPosition;
   };
 
+  var setDefaults = function () {
+    draggingElement.style.left = defaultPosition.x + 'px';
+    draggingElement.style.top = defaultPosition.y + 'px';
+  };
+
+
   window.dragEndDrop = {
     initialize: initialize,
+    setDefaults: setDefaults,
     getElementPosition: getCurrentPositon,
     getDefaultPositon: getDefaultPositon
   };

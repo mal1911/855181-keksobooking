@@ -2,6 +2,7 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 75;
+  var pins;
   var mapElement = document.querySelector('.map');
 
   var getPositionFromPinCoordinats = function (coordinats) {
@@ -13,22 +14,43 @@
   };
 
   var getPinElement = function (pin, template) {
-    var pinElement = template.cloneNode(true);
-    var location = getPositionFromPinCoordinats(pin.location);
-    pinElement.style.left = location.x + 'px';
-    pinElement.style.top = location.y + 'px';
-    pinElement.querySelector('img').src = pin.author.avatar;
-    pinElement.querySelector('img').alt = pin.offer.title;
-    pinElement.tabIndex = '0';
-    return pinElement;
+    if (pin.offer) {
+      var pinElement = template.cloneNode(true);
+      var location = getPositionFromPinCoordinats(pin.location);
+      pinElement.style.left = location.x + 'px';
+      pinElement.style.top = location.y + 'px';
+      pinElement.querySelector('img').src = pin.author.avatar;
+      pinElement.querySelector('img').alt = pin.offer.title;
+      pinElement.tabIndex = '0';
+      return pinElement;
+    } else {
+      return false;
+    }
   };
 
   var show = function () {
-    if (!isShow()) {
+    var successHandler = function (arr) {
+      pins = arr;
       var pinListElement = mapElement.querySelector('.map__pins');
       var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
       window.domUtil.addChildElements(pins, pinListElement, pinTemplate, getPinElement);
+    };
+
+    var errorHandler = function (errorMessage) {
+      var repeatHandler = function () {
+        show();
+      };
+      window.msg.showError(errorMessage, repeatHandler);
+    };
+
+    if (!isShow()) {
+      window.backend.load(window.url.LOAD, successHandler, errorHandler);
     }
+  };
+
+  var hide = function () {
+    var elements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.domUtil.removeElements(elements);
   };
 
   var setActivePin = function (element) {
@@ -48,10 +70,9 @@
     }
   };
 
-  var pins = window.data.getPins();
-
   window.pins = {
     show: show,
+    hide: hide,
     activatePin: activatePin
   };
 })();

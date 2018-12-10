@@ -29,14 +29,19 @@
   };
 
   var initialize = function (onActivateMainPin) {
-    var onActivateElement = function (position) {
+    var activateElementHandler = function (position) {
       onActivateMainPin(getCoordinatsFromPosition(position));
     };
-    window.dragEndDrop.initialize(mainPinElement, mainPinValidPosition, onActivateElement);
+    window.dragEndDrop.initialize(mainPinElement, mainPinValidPosition, activateElementHandler);
+  };
+
+  var setDefaults = function () {
+    window.dragEndDrop.setDefaults();
   };
 
   window.mainPin = {
     initialize: initialize,
+    setDefaults: setDefaults,
     getCoordinats: getCoordinats,
     getDefaultCoordinats: getDefaultCoordinats
   };

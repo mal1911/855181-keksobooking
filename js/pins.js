@@ -14,14 +14,18 @@
   };
 
   var getPinElement = function (pin, template) {
-    var pinElement = template.cloneNode(true);
-    var location = getPositionFromPinCoordinats(pin.location);
-    pinElement.style.left = location.x + 'px';
-    pinElement.style.top = location.y + 'px';
-    pinElement.querySelector('img').src = pin.author.avatar;
-    pinElement.querySelector('img').alt = pin.offer.title;
-    pinElement.tabIndex = '0';
-    return pinElement;
+    if (pin.offer) {
+      var pinElement = template.cloneNode(true);
+      var location = getPositionFromPinCoordinats(pin.location);
+      pinElement.style.left = location.x + 'px';
+      pinElement.style.top = location.y + 'px';
+      pinElement.querySelector('img').src = pin.author.avatar;
+      pinElement.querySelector('img').alt = pin.offer.title;
+      pinElement.tabIndex = '0';
+      return pinElement;
+    } else {
+      return false;
+    }
   };
 
   var show = function () {
@@ -33,12 +37,20 @@
     };
 
     var errorHandler = function (errorMessage) {
-      window.errorMessage.show(errorMessage);
+      var repeatHandler = function () {
+        show();
+      };
+      window.msg.showError(errorMessage, repeatHandler);
     };
 
     if (!isShow()) {
       window.backend.load(window.url.LOAD, successHandler, errorHandler);
     }
+  };
+
+  var hide = function () {
+    var elements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.domUtil.removeElements(elements);
   };
 
   var setActivePin = function (element) {
@@ -58,11 +70,9 @@
     }
   };
 
-
-//  var pins = window.data.getPins();
-
   window.pins = {
     show: show,
+    hide: hide,
     activatePin: activatePin
   };
 })();

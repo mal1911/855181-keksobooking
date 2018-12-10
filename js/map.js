@@ -28,15 +28,22 @@
   });
 
   var initialize = function (onActivateMainPin) {
-    var onNewActivateMainPin = function (coordinats) {
+    var activateMainPinHandler = function (coordinats) {
       window.pins.show();
       onActivateMainPin(coordinats);
     };
-    window.mainPin.initialize(onNewActivateMainPin);
+    window.mainPin.initialize(activateMainPinHandler);
+  };
+
+  var reset = function () {
+    window.mainPin.setDefaults();
+    window.card.close();
+    window.pins.hide();
   };
 
   window.map = {
     initialize: initialize,
+    reset: reset,
     enable: enable,
     disable: disable
   };

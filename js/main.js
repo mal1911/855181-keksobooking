@@ -5,17 +5,23 @@
     window.form.enable();
   };
 
-  var deactivatePage = function () {
+  var resetPage = function () {
+    window.map.reset();
     window.map.disable();
     window.form.disable();
+    window.form.setAddress(window.mainPin.getDefaultCoordinats());
   };
 
-  var onMainPinActivate = function (coordinats) {
+  var activateMainPinHandler = function (coordinats) {
     activatePage();
     window.form.setAddress(coordinats);
   };
 
-  window.map.initialize(onMainPinActivate);
-  window.form.setAddress(window.mainPin.getDefaultCoordinats());
-  deactivatePage();
+  var resetFormHandler = function () {
+    resetPage();
+  };
+
+  window.map.initialize(activateMainPinHandler);
+  window.form.initialize(resetFormHandler);
+  resetPage();
 })();

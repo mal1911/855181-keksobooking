@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var mapElement = document.querySelector('.map');
+
   var enable = function () {
     if (mapElement.classList.contains('map--faded')) {
       mapElement.classList.remove('map--faded');

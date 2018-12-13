@@ -1,12 +1,22 @@
 'use strict';
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 75;
+  var Pin = {
+    WIDTH: 50,
+    HEIGHT: 75,
+    COUNT: 5
+  };
+
+  var PriceLimit = {
+    LOW: 10000,
+    HIGH: 50000
+  };
+
   var pins;
+  var filter;
   var mapElement = document.querySelector('.map');
 
   var getPositionFromPinCoordinats = function (coordinats) {
-    return {x: coordinats.x - PIN_WIDTH / 2, y: coordinats.y - PIN_HEIGHT};
+    return {x: coordinats.x - Pin.WIDTH / 2, y: coordinats.y - Pin.HEIGHT};
   };
 
   var isShow = function () {
@@ -28,18 +38,62 @@
     }
   };
 
+  var setFilter = function (arrArg) {
+    if (filter) {
+      return arrArg.filter(function (pin) {
+        var isIncludePrice = function (price) {
+          var retVal = true;
+          switch (price) {
+            case 'middle': {
+              retVal = pin.offer.price >= PriceLimit.LOW && pin.offer.price <= PriceLimit.HIGH;
+              break;
+            }
+            case 'low': {
+              retVal = pin.offer.price < PriceLimit.LOW;
+              break;
+            }
+            case 'high': {
+              retVal = pin.offer.price > PriceLimit.HIGH;
+              break;
+            }
+          }
+          return retVal;
+        };
+
+        var isIncludeFeatures = function (features) {
+          var retVal = true;
+          features.forEach(function (feature) {
+            if (pin.offer.features.indexOf(feature) === -1) {
+              retVal = false;
+            }
+          });
+          return retVal;
+        };
+
+        var type = (filter.type === 'any' ? true : pin.offer.type === filter.type);
+        var rooms = (filter.rooms === 'any' ? true : pin.offer.rooms === parseInt(filter.rooms, 10));
+        var guests = (filter.guests === 'any' ? true : pin.offer.guests === parseInt(filter.guests, 10));
+
+        return type && isIncludePrice(filter.price) && rooms && guests && isIncludeFeatures(filter.features);
+      });
+    } else {
+      return arrArg;
+    }
+  };
+
   var show = function () {
-    var successHandler = function (arr) {
-      pins = arr;
+    var successHandler = function (arrArg) {
+      pins = setFilter(arrArg);
       var pinListElement = mapElement.querySelector('.map__pins');
       var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-      window.domUtil.addChildElements(pins, pinListElement, pinTemplate, getPinElement);
+      window.domUtil.addChildElements(pins, pinListElement, pinTemplate, getPinElement, Pin.COUNT);
     };
 
     var errorHandler = function (errorMessage) {
       var repeatHandler = function () {
         show();
       };
+      hide();
       window.msg.showError(errorMessage, repeatHandler);
     };
 
@@ -70,9 +124,16 @@
     }
   };
 
+  var addFilter = function (filterArg) {
+    filter = filterArg;
+    hide();
+    show();
+  };
+
   window.pins = {
     show: show,
     hide: hide,
+    addFilter: addFilter,
     activatePin: activatePin
   };
 })();

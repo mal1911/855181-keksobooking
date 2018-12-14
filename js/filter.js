@@ -33,11 +33,5 @@
     });
   };
 
-  typeElement.addEventListener('change', onChangeFilter);
-  priceElement.addEventListener('change', onChangeFilter);
-  roomsElement.addEventListener('change', onChangeFilter);
-  guestsElement.addEventListener('change', onChangeFilter);
-  for (var i = 0; i < featureElements.length; i++) {
-    featureElements[i].addEventListener('change', onChangeFilter);
-  }
+  filterForm.addEventListener('change', onChangeFilter);
 })();

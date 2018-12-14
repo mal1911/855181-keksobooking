@@ -15,6 +15,9 @@
   var roomNumberElement = formElement.querySelector('#room_number');
   var capacityElement = formElement.querySelector('#capacity');
   var featureElements = formElement.querySelectorAll('.feature__checkbox');
+  var avatarPreview = document.querySelector('.ad-form-header__preview img');
+  var photoBlockElement = document.querySelector('.ad-form__photo');
+
 
   var isEnabled = function () {
     return !formElement.classList.contains('ad-form--disabled');
@@ -206,6 +209,8 @@
     capacityElement.value = '3';
     timeinElement.value = '12:00';
     timeoutElement.value = '12:00';
+    avatarPreview.src = 'img/muffin-grey.svg';
+    photoBlockElement.innerHTML = '';
 
     for (i = 0; i < featureElements.length; i++) {
       featureElements[i].checked = false;

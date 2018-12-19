@@ -72,7 +72,7 @@
     return currentPosition;
   };
 
-  var getDefaultPositon = function () {
+  var getDefaultPosition = function () {
     return defaultPosition;
   };
 
@@ -86,6 +86,6 @@
     initialize: initialize,
     setDefaults: setDefaults,
     getElementPosition: getCurrentPositon,
-    getDefaultPositon: getDefaultPositon
+    getDefaultPosition: getDefaultPosition
   };
 })();

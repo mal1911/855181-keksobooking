@@ -18,7 +18,7 @@
   };
 
   var getDefaultCoordinats = function () {
-    return getCoordinatsFromPosition(window.dragEndDrop.getDefaultPositon());
+    return getCoordinatsFromPosition(window.dragEndDrop.getDefaultPosition());
   };
 
   var mainPinValidPosition = {

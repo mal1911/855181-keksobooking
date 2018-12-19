@@ -1,14 +1,26 @@
 'use strict';
 (function () {
-  var PINS_COUNT = 8;
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 75;
-  var MIN_PRICE = 1000;
-  var MAX_PRICE = 1000000;
-  var MIN_GUESTS = 1;
-  var MAX_GUESTS = 100;
-  var MIN_ROOMS = 1;
-  var MAX_ROOMS = 5;
+
+  var Pin = {
+    COUNT: 8,
+    WIDTH: 50,
+    HEIGHT: 75
+  };
+
+  var Price = {
+    MIN: 1000,
+    MAX: 1000000
+  };
+
+  var Guests = {
+    MIN: 1,
+    MAX: 100
+  };
+
+  var Rooms = {
+    MIN: 1,
+    MAX: 5
+  };
 
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
     'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
@@ -35,9 +47,9 @@
 
   var getPins = function () {
     var arr = [];
-    for (var i = 0; i < PINS_COUNT; i++) {
-      var x = window.util.getRandomInt(window.pinsArea.minX + PIN_WIDTH / 2, window.pinsArea.maxX - PIN_WIDTH / 2);
-      var y = window.util.getRandomInt(window.pinsArea.minY, window.pinsArea.maxY - PIN_HEIGHT);
+    for (var i = 0; i < Pin.COUNT; i++) {
+      var x = window.util.getRandomInt(window.pinsArea.minX + Pin.WIDTH / 2, window.pinsArea.maxX - Pin.WIDTH / 2);
+      var y = window.util.getRandomInt(window.pinsArea.minY, window.pinsArea.maxY - Pin.HEIGHT);
 
       arr[i] = {
         author: {
@@ -47,10 +59,10 @@
         offer: {
           title: getTitle(i),
           address: x + ',' + y,
-          price: window.util.getRandomInt(MIN_PRICE, MAX_PRICE),
+          price: window.util.getRandomInt(Price.MIN, Price.MAX),
           type: TYPES[window.util.getRandomInt(0, TYPES.length - 1)],
-          rooms: window.util.getRandomInt(MIN_ROOMS, MAX_ROOMS),
-          guests: window.util.getRandomInt(MIN_GUESTS, MAX_GUESTS),
+          rooms: window.util.getRandomInt(Rooms.MIN, Rooms.MAX),
+          guests: window.util.getRandomInt(Guests.MIN, Guests.MAX),
           checkin: CHECK[window.util.getRandomInt(0, CHECK.length - 1)],
           checkout: CHECK[window.util.getRandomInt(0, CHECK.length - 1)],
           features: getFeatures(),

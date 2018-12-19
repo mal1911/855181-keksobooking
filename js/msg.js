@@ -3,12 +3,10 @@
 
   var showMsg = function (msgText, onRepeat, type) {
 
-
     var template = document.querySelector('#' + type).content.querySelector('.' + type);
     var element = template.cloneNode(true);
     element.querySelector('.' + type + '__message').textContent = msgText;
     document.querySelector('main').appendChild(element);
-
 
     var onEscPress = function (evt) {
       if (evt.keyCode === window.keyUtil.ESC_KEYCODE) {

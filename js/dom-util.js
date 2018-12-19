@@ -1,11 +1,11 @@
 'use strict';
 (function () {
 
-  var addChildElements = function (arr, parentElement, template, getElement, countArg) {
+  var addChildElements = function (arrArg, parentElement, template, getElement, countArg) {
     var fragment = document.createDocumentFragment();
-    var count = (countArg && countArg < arr.length) ? countArg : arr.length;
+    var count = (countArg && countArg < arrArg.length) ? countArg : arrArg.length;
     for (var i = 0; i < count; i++) {
-      var element = getElement(arr[i], template);
+      var element = getElement(arrArg[i], template);
       if (element) {
         fragment.appendChild(element);
       }

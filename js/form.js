@@ -1,9 +1,11 @@
 'use strict';
 (function () {
-  var PRICE_BUNGALO = 0;
-  var PRICE_FLAT = 1000;
-  var PRICE_HOUSE = 5000;
-  var PRICE_PALACE = 10000;
+  var Price = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
 
   var onResetForm;
   var formElement = document.querySelector('.ad-form');
@@ -61,18 +63,18 @@
   };
 
   var setPriceElementMinValue = function (value) {
-    var price = PRICE_BUNGALO;
+    var price = Price.BUNGALO;
     switch (value) {
       case 'bungalo':
         break;
       case 'flat':
-        price = PRICE_FLAT;
+        price = Price.FLAT;
         break;
       case 'house':
-        price = PRICE_HOUSE;
+        price = Price.HOUSE;
         break;
       case 'palace':
-        price = PRICE_PALACE;
+        price = Price.PALACE;
         break;
     }
     priceElement.setAttribute('min', price);

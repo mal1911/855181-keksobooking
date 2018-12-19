@@ -1,6 +1,12 @@
 'use strict';
 
 (function () {
+  var Image = {
+    WIDTH: '70',
+    HEIGHT: '70',
+    MARGIN_RIGHT: '10px'
+  };
+
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var avatarChooser = document.querySelector('.ad-form-header__input[type=file]');
@@ -33,9 +39,9 @@
 
   var createImage = function (blockElementArg) {
     var imageElement = blockElementArg.appendChild(document.createElement('IMG'));
-    imageElement.width = '70';
-    imageElement.height = '70';
-    imageElement.style.marginRight = '10px';
+    imageElement.width = Image.WIDTH;
+    imageElement.height = Image.HEIGHT;
+    imageElement.style.marginRight = Image.MARGIN_RIGHT;
     return imageElement;
   };
 

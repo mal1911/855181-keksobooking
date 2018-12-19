@@ -1,15 +1,17 @@
 'use strict';
 (function () {
-  var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 65;
-  var MAIN_PIN_POINTER_HEIGHT = 22;
+  var MainPin = {
+    WIDTH: 65,
+    HEIGHT: 65,
+    POINTER_HEIGHT: 22
+  };
 
   var mainPinElement = document.querySelector('.map__pin--main');
 
   var getCoordinatsFromPosition = function (position) {
     return {
-      x: Math.floor(position.x + MAIN_PIN_WIDTH / 2),
-      y: Math.floor(position.y + MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)
+      x: Math.floor(position.x + MainPin.WIDTH / 2),
+      y: Math.floor(position.y + MainPin.HEIGHT + MainPin.POINTER_HEIGHT)
     };
   };
 
@@ -23,9 +25,9 @@
 
   var mainPinValidPosition = {
     minX: window.pinsArea.minX,
-    maxX: window.pinsArea.maxX - MAIN_PIN_WIDTH,
-    minY: window.pinsArea.minY,
-    maxY: window.pinsArea.maxY - (MAIN_PIN_HEIGHT + MAIN_PIN_POINTER_HEIGHT)
+    maxX: window.pinsArea.maxX - MainPin.WIDTH,
+    minY: window.pinsArea.minY - (MainPin.HEIGHT + MainPin.POINTER_HEIGHT),
+    maxY: window.pinsArea.maxY - (MainPin.HEIGHT + MainPin.POINTER_HEIGHT)
   };
 
   var initialize = function (onActivateMainPin) {

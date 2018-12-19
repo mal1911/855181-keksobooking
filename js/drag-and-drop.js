@@ -81,7 +81,6 @@
     draggingElement.style.top = defaultPosition.y + 'px';
   };
 
-
   window.dragEndDrop = {
     initialize: initialize,
     setDefaults: setDefaults,

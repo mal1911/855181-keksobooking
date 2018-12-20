@@ -90,10 +90,10 @@
 
   var open = function (pin) {
     close();
-    var mapFiltersContainer = mapElement.querySelector('.map__filters-container');
+    var mapFiltersElement = mapElement.querySelector('.map__filters-container');
     var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
     var cardElement = getCardElement(pin, cardTemplate);
-    mapElement.insertBefore(cardElement, mapFiltersContainer);
+    mapElement.insertBefore(cardElement, mapFiltersElement);
     document.addEventListener('keydown', onEscPress);
     cardElement.querySelector('.popup__close').addEventListener('click', close);
   };

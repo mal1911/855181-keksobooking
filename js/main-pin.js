@@ -15,10 +15,6 @@
     };
   };
 
-  var getCoordinats = function () {
-    return getCoordinatsFromPosition(window.dragEndDrop.getElementPosition());
-  };
-
   var getDefaultCoordinats = function () {
     return getCoordinatsFromPosition(window.dragEndDrop.getDefaultPosition());
   };
@@ -44,7 +40,6 @@
   window.mainPin = {
     initialize: initialize,
     setDefaults: setDefaults,
-    getCoordinats: getCoordinats,
     getDefaultCoordinats: getDefaultCoordinats
   };
 })();

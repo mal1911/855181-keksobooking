@@ -68,10 +68,6 @@
     draggingElement.addEventListener('mousedown', onDraggingElement);
   };
 
-  var getCurrentPositon = function () {
-    return currentPosition;
-  };
-
   var getDefaultPosition = function () {
     return defaultPosition;
   };
@@ -84,7 +80,6 @@
   window.dragEndDrop = {
     initialize: initialize,
     setDefaults: setDefaults,
-    getElementPosition: getCurrentPositon,
     getDefaultPosition: getDefaultPosition
   };
 })();

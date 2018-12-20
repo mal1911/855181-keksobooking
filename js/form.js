@@ -138,26 +138,26 @@
   };
 
   var setCapacityValues = function (element) {
+    var getOptionStyle = function () {
+      return isCapacityValid(elements[i].value, rule) ? 'inline' : 'none';
+    };
+
     var elements = capacityElement.querySelectorAll('option');
     var rule = getCapacityRule(element.value);
     for (var i = 0; i < elements.length; i++) {
-      if (isCapacityValid(elements[i].value, rule)) {
-        elements[i].style.display = 'inline';
-      } else {
-        elements[i].style.display = 'none';
-      }
+      elements[i].style.display = getOptionStyle();
     }
     setCapacityCustomValidate(capacityElement);
   };
 
   var setCapacityCustomValidate = function (element) {
+    var getInvalidMessage = function () {
+      return !isCapacityValid(value, rule) ? getCapacityInvalidMessage(roomNumberElement.value) : '';
+    };
+
     var value = element.value;
     var rule = getCapacityRule(roomNumberElement.value);
-    if (!isCapacityValid(value, rule)) {
-      element.setCustomValidity(getCapacityInvalidMessage(roomNumberElement.value));
-    } else {
-      element.setCustomValidity('');
-    }
+    element.setCustomValidity(getInvalidMessage());
   };
 
   roomNumberElement.addEventListener('change', function (evt) {
